@@ -8,8 +8,8 @@ import javax.inject.Inject
 class MostPopularUseCase @Inject constructor(
     private val repository: Repository) {
 
-    suspend operator fun invoke(): List<Movie>{
-        val result = repository.getMostPopularFromApi()
+    suspend operator fun invoke(page: Int): List<Movie>{
+        val result = repository.getMostPopularFromApi(page)
         return if(result.isNotEmpty()){
             repository.deleteMostPopular()
             repository.insertMostPopular(result.map { it.movieToPopular() })

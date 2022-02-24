@@ -2,6 +2,8 @@ package com.hectorpolendo.examen.ui.view.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import com.hectorpolendo.examen.R
 import com.hectorpolendo.examen.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        NavigationUI.setupWithNavController(binding.bottomNav,
+            Navigation.findNavController(this, R.id.hostFragment))
     }
 }

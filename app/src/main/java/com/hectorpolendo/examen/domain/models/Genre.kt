@@ -8,10 +8,12 @@ class Genre (
     val name: String
 )
 
-fun GenreResult.toDomain() = Genre(
+fun GenreResult.resultToModel() = Genre(
     id,
-    name)
+    name
+)
 
-fun GenreEntity.toDomain() = Genre(
+fun GenreEntity.entityToModel() = Genre(
     id,
-    name)
+    name,
+)

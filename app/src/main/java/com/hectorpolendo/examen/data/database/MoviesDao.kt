@@ -4,10 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.hectorpolendo.examen.data.database.entities.MostPopularEntity
-import com.hectorpolendo.examen.data.database.entities.PlayingNowEntity
-import com.hectorpolendo.examen.data.database.entities.TopRatedEntity
-import com.hectorpolendo.examen.data.database.entities.UpcomingEntity
+import com.hectorpolendo.examen.data.database.entities.*
 
 @Dao
 interface MoviesDao {
@@ -67,4 +64,60 @@ interface MoviesDao {
 
     @Query("DELETE FROM TopRated")
     suspend fun deleteTopRated()
+    /**
+    AIRING TODAY
+     **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAiringToday(movies: List<TvAiringTodayEntity>)
+
+    @Query("SELECT * FROM TvAiringToday")
+    suspend fun readAiringToday(): List<TvAiringTodayEntity>
+
+    @Query("SELECT * FROM TvAiringToday WHERE id = :id")
+    suspend fun readAiringTodayById(id: Int): TvAiringTodayEntity
+
+    @Query("DELETE FROM TvAiringToday")
+    suspend fun deleteAiringToday()
+    /**
+    TV POPULAR
+     **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTvPopular(movies: List<TvPopularEntity>)
+
+    @Query("SELECT * FROM TvPopular")
+    suspend fun readTvPopular(): List<TvPopularEntity>
+
+    @Query("SELECT * FROM TvPopular WHERE id = :id")
+    suspend fun readTvPopularById(id: Int): TvPopularEntity
+
+    @Query("DELETE FROM TvPopular")
+    suspend fun deleteTvPopular()
+    /**
+    TV TOP RATED
+     **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertTvTopRated(movies: List<TvTopRatedEntity>)
+
+    @Query("SELECT * FROM TvTopRated")
+    suspend fun readTvTopRated(): List<TvTopRatedEntity>
+
+    @Query("SELECT * FROM TvTopRated WHERE id = :id")
+    suspend fun readTvTopRatedById(id: Int): TvTopRatedEntity
+
+    @Query("DELETE FROM TvTopRated")
+    suspend fun deleteTvTopRated()
+    /**
+    GENRES
+     **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGenres(genres: List<GenreEntity>)
+
+    @Query("SELECT * FROM Genres")
+    suspend fun readGenres(): List<GenreEntity>
+
+    @Query("SELECT * FROM Genres WHERE id = :id")
+    suspend fun readGenreById(id: Int): GenreEntity
+
+    @Query("DELETE FROM Genres")
+    suspend fun deleteGenres()
 }

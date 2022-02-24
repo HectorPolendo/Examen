@@ -11,7 +11,7 @@ data class GenreEntity (
     val name: String
 )
 
-fun Genre.toDatabase() = GenreEntity(
+fun Genre.modelToEntity() = GenreEntity(
     id,
     name
 )

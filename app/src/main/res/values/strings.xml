@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">Examen</string>
-    <string name="popular_movies">Las más destacadas</string>
+    <string name="popular">Las más destacadas</string>
     <string name="playing_now_movies">Proyectándose</string>
     <string name="upcoming">Próximamente</string>
+    <string name="top_rated">Las mejor valoradas</string>
+    <string name="airing_today">Transmitidas hoy</string>
+    <string name="movies">Películas</string>
+    <string name="series">Series</string>
+    <string name="date">Fecha de lanzamiento</string>
+    <string name="score">Calificación</string>
+    <string name="language">Lenguage original</string>
+    <string name="favorites">Favoritas</string>
+    <string name="categories">Categorias</string>
+    <string name="empty_list">Empty list</string>
 </resources>

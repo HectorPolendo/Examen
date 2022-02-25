@@ -193,7 +193,7 @@ class Repository @Inject constructor(
         dao.deleteTvTopRated()
     }
     /**
-    TV SERIES TOP RATED
+    GENRES
      **/
     suspend fun insertGenres(list: List<GenreEntity>){
         dao.insertGenres(list)
@@ -216,5 +216,23 @@ class Repository @Inject constructor(
 
     suspend fun deleteGenres(){
         dao.deleteGenres()
+    }
+    /**
+    GENRES
+     **/
+    suspend fun insertFavorite(fav: FavoriteEntity){
+        dao.insertFavorites(fav)
+    }
+
+    suspend fun getFavoritesFromDatabase(): List<FavoriteEntity> {
+        return dao.readFavorites()
+    }
+
+    suspend fun getFavoriteFromDatabaseById(id: Int): Boolean {
+        return dao.readFavoriteById(id) != null
+    }
+
+    suspend fun deleteFavorite(id: Int){
+        dao.deleteFavorite(id)
     }
 }

@@ -120,4 +120,18 @@ interface MoviesDao {
 
     @Query("DELETE FROM Genres")
     suspend fun deleteGenres()
+    /**
+    FAVORITES
+     **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFavorites(fav: FavoriteEntity)
+
+    @Query("SELECT * FROM Favorites")
+    suspend fun readFavorites(): List<FavoriteEntity>
+
+    @Query("SELECT * FROM Favorites WHERE id = :id")
+    suspend fun readFavoriteById(id: Int): FavoriteEntity
+
+    @Query("DELETE FROM Favorites WHERE id = :id")
+    suspend fun deleteFavorite(id: Int)
 }

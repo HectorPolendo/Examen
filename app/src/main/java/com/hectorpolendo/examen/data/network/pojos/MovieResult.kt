@@ -1,10 +1,10 @@
 package com.hectorpolendo.examen.data.network.pojos
 
 data class MovieResult(
+    val id: Int,
     val adult: Boolean,
     val backdrop_path: String,
     val genre_ids: List<String>,
-    val id: Int,
     val original_language: String,
     val original_title: String,
     val overview: String,

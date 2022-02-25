@@ -13,5 +13,6 @@
     <string name="favorites">Favoritas</string>
     <string name="genres">Géneros</string>
     <string name="empty_list">Empty list</string>
-    <string name="trailers">Trailes</string>
+    <string name="trailers">Trailers</string>
+    <string name="overview">Sipnosis</string>
 </resources>

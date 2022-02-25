@@ -5,22 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.hectorpolendo.examen.databinding.ActivityInfoBinding
-import com.hectorpolendo.examen.domain.models.Movie
-import com.hectorpolendo.examen.domain.models.TvSerie
 import com.hectorpolendo.examen.domain.models.Video
 import com.hectorpolendo.examen.ui.view.adapters.VideosAdapter
 import com.hectorpolendo.examen.ui.viewmodel.InfoViewModel
 import com.hectorpolendo.examen.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
-import android.content.Context
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import android.util.TypedValue
 import com.hectorpolendo.examen.R
+import com.hectorpolendo.examen.util.Method
 
 @AndroidEntryPoint
 class InfoActivity : AppCompatActivity() {
@@ -48,6 +44,10 @@ class InfoActivity : AppCompatActivity() {
         binding.rvTrailers.apply {
             layoutManager = LinearLayoutManager(this@InfoActivity, LinearLayoutManager.VERTICAL, false)
             adapter = videosAdapter
+        }
+
+        if(!Method.isOnline(this@InfoActivity)){
+            binding.tvTrailers.visibility = View.GONE
         }
     }
 

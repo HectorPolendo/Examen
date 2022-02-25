@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.hectorpolendo.examen.R
 import com.hectorpolendo.examen.databinding.FragmentHomeBinding
+import com.hectorpolendo.examen.util.IOnBackPressed
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), IOnBackPressed {
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,5 +27,9 @@ class HomeFragment : Fragment() {
         fragTransaction.commit()
 
         return binding.root
+    }
+
+    override fun onBackPressed(): Boolean {
+        return false
     }
 }

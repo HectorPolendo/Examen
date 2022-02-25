@@ -107,19 +107,33 @@ interface MoviesDao {
     @Query("DELETE FROM TvTopRated")
     suspend fun deleteTvTopRated()
     /**
-    GENRES
+    MOVIES GENRES
      **/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertGenres(genres: List<GenreEntity>)
+    suspend fun insertMovieGenres(movieGenres: List<MovieGenreEntity>)
 
-    @Query("SELECT * FROM Genres")
-    suspend fun readGenres(): List<GenreEntity>
+    @Query("SELECT * FROM MovieGenres")
+    suspend fun readMovieGenres(): List<MovieGenreEntity>
 
-    @Query("SELECT * FROM Genres WHERE id = :id")
-    suspend fun readGenreById(id: Int): GenreEntity
+    @Query("SELECT * FROM MovieGenres WHERE id = :id")
+    suspend fun readMovieGenreById(id: Int): MovieGenreEntity
 
-    @Query("DELETE FROM Genres")
-    suspend fun deleteGenres()
+    @Query("DELETE FROM MovieGenres")
+    suspend fun deleteMovieGenres()
+    /**
+    SERIES GENRES
+     **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSerieGenres(serieGenres: List<SerieGenreEntity>)
+
+    @Query("SELECT * FROM SerieGenres")
+    suspend fun readSerieGenres(): List<SerieGenreEntity>
+
+    @Query("SELECT * FROM SerieGenres WHERE id = :id")
+    suspend fun readSerieGenreById(id: Int): SerieGenreEntity
+
+    @Query("DELETE FROM SerieGenres")
+    suspend fun deleteSerieGenres()
     /**
     FAVORITES
      **/
@@ -134,4 +148,18 @@ interface MoviesDao {
 
     @Query("DELETE FROM Favorites WHERE id = :id")
     suspend fun deleteFavorite(id: Int)
+    /**
+    VIDEOS
+     **/
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertVideos(video: VideoEntity)
+
+    @Query("SELECT * FROM Video")
+    suspend fun readVideos(): List<VideoEntity>
+
+    @Query("SELECT * FROM Video WHERE id = :id")
+    suspend fun readVideoById(id: Int): VideoEntity
+
+    @Query("DELETE FROM Video")
+    suspend fun deleteVideos()
 }

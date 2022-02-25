@@ -6,19 +6,27 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.hectorpolendo.examen.R
 import com.hectorpolendo.examen.databinding.ActivityInfoBinding
 import com.hectorpolendo.examen.domain.models.Movie
 import com.hectorpolendo.examen.domain.models.TvSerie
+import com.hectorpolendo.examen.domain.models.Video
+import com.hectorpolendo.examen.ui.view.adapters.VideosAdapter
 import com.hectorpolendo.examen.ui.viewmodel.InfoViewModel
 import com.hectorpolendo.examen.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
+import android.content.Context
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import android.util.TypedValue
+import com.hectorpolendo.examen.R
 
 @AndroidEntryPoint
 class InfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityInfoBinding
     private val infoViewModel: InfoViewModel by viewModels()
+    private lateinit var videosAdapter: VideosAdapter
     private var movieId: Int? = null
     private var image: String? = null
 
@@ -27,6 +35,7 @@ class InfoActivity : AppCompatActivity() {
         binding = ActivityInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        videosAdapter = VideosAdapter()
         loading()
         getInformation()
         infoViewModel.onCreate(movieId!!)
@@ -35,15 +44,10 @@ class InfoActivity : AppCompatActivity() {
         binding.fbFavorite.setOnClickListener {
             infoViewModel.changeFavorite(movieId!!, image!!)
         }
-    }
 
-    private fun loading(){
-        with(binding){
-            progressBar.visibility = View.VISIBLE
-            tvOverview.visibility = View.INVISIBLE
-            tvLanguage.visibility = View.INVISIBLE
-            tvScore.visibility = View.INVISIBLE
-            tvDate.visibility = View.INVISIBLE
+        binding.rvTrailers.apply {
+            layoutManager = LinearLayoutManager(this@InfoActivity, LinearLayoutManager.VERTICAL, false)
+            adapter = videosAdapter
         }
     }
 
@@ -52,8 +56,8 @@ class InfoActivity : AppCompatActivity() {
     }
 
     private fun subscribeObservers() {
-        infoViewModel.movie.observe(this, object : Observer<Movie> {
-            override fun onChanged(t: Movie?) {
+        infoViewModel.movie.observe(this,
+            { t ->
                 Glide.with(this@InfoActivity)
                     .load(Constants.PATH_IMGS+t!!.poster_path)
                     .into(binding.ivMovie)
@@ -73,12 +77,12 @@ class InfoActivity : AppCompatActivity() {
                 binding.tvLanguage.text = t.original_language!!.uppercase()
                 binding.tvOverview.text = t!!.overview
 
-                onResponseCase()
-            }
-        })
+                infoViewModel.getGenre(true)
+                infoViewModel.getVideos(this@InfoActivity, t.id!!, true)
+            })
 
-        infoViewModel.tvSerie.observe(this, object : Observer<TvSerie> {
-            override fun onChanged(t: TvSerie?) {
+        infoViewModel.tvSerie.observe(this,
+            { t ->
                 Glide.with(this@InfoActivity)
                     .load(Constants.PATH_IMGS+t!!.poster_path)
                     .into(binding.ivMovie)
@@ -89,13 +93,17 @@ class InfoActivity : AppCompatActivity() {
                 binding.collapsingToolbar.setExpandedTitleColor(Color.WHITE)
                 binding.collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE)
                 binding.tvDate.text = t!!.first_air_date
-                binding.tvScore.text = t!!.vote_average.toString()
+                if(t.vote_average!! > 0){
+                    binding.tvScore.text = t!!.vote_average.toString()
+                }else{
+                    binding.tvScore.text = "Sin calificación"
+                }
                 binding.tvLanguage.text = t.original_language!!.uppercase()
                 binding.tvOverview.text = t!!.overview
 
-                onResponseCase()
-            }
-        })
+                infoViewModel.getGenre(false)
+                infoViewModel.getVideos(this@InfoActivity, t.id!!, false)
+            })
 
         infoViewModel.isFavorite.observe(this, {
             if(it){
@@ -103,17 +111,50 @@ class InfoActivity : AppCompatActivity() {
             }else{
                 binding.fbFavorite.setImageResource(R.drawable.ic_favorite)
             }
+            onResponseCase()
         })
 
+        infoViewModel.videos.observe(this, {
+            videosAdapter.setVideos(it as ArrayList<Video>)
+        })
+
+        infoViewModel.genres.observe(this, {
+            it.forEach {
+                val mChip =
+                    this.layoutInflater.inflate(R.layout.item_chip_genre, null, false) as Chip
+                mChip.text = it.name
+                val paddingDp = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP, 10f,
+                    resources.displayMetrics
+                ).toInt()
+                mChip.setPadding(paddingDp, 0, paddingDp, 0)
+                mChip.setOnCheckedChangeListener { compoundButton, b -> }
+                binding.cpGroup.addView(mChip)
+            }
+        })
+    }
+
+    private fun loading(){
+        with(binding){
+            progressBar.visibility = View.VISIBLE
+            tvOverview.visibility = View.INVISIBLE
+            tvLanguage.visibility = View.INVISIBLE
+            tvScore.visibility = View.INVISIBLE
+            tvDate.visibility = View.INVISIBLE
+            cpGroup.visibility = View.INVISIBLE
+            rvTrailers.visibility = View.INVISIBLE
+        }
     }
 
     private fun onResponseCase(){
         with(binding){
             progressBar.visibility = View.INVISIBLE
+            tvOverview.visibility = View.VISIBLE
+            tvLanguage.visibility = View.VISIBLE
             tvScore.visibility = View.VISIBLE
             tvDate.visibility = View.VISIBLE
-            tvLanguage.visibility = View.VISIBLE
-            tvOverview.visibility = View.VISIBLE
+            cpGroup.visibility = View.VISIBLE
+            rvTrailers.visibility = View.VISIBLE
         }
     }
 }

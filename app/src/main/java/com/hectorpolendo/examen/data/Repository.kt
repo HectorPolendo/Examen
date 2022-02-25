@@ -6,6 +6,7 @@ import com.hectorpolendo.examen.data.network.ServiceController
 import com.hectorpolendo.examen.data.network.pojos.GenreResult
 import com.hectorpolendo.examen.data.network.pojos.MovieResult
 import com.hectorpolendo.examen.data.network.pojos.TvSeriesResult
+import com.hectorpolendo.examen.data.network.pojos.VideoResult
 import com.hectorpolendo.examen.domain.models.*
 import javax.inject.Inject
 
@@ -193,32 +194,62 @@ class Repository @Inject constructor(
         dao.deleteTvTopRated()
     }
     /**
-    GENRES
+    MOVIES GENRES
      **/
-    suspend fun insertGenres(list: List<GenreEntity>){
-        dao.insertGenres(list)
+    suspend fun insertMovieGenres(list: List<MovieGenreEntity>){
+        dao.insertMovieGenres(list)
     }
 
-    suspend fun getGenresFromApi():List<Genre>{
-        val response: List<GenreResult> = controller.getGenres()
+    suspend fun getMoviesGenresFromApi():List<Genre>{
+        val response: List<GenreResult> = controller.getMovieGenres()
         return response.map { it.resultToModel() }
     }
 
-    suspend fun getGenresFromDatabase(): List<Genre>{
-        val response: List<GenreEntity> = dao.readGenres()
+    suspend fun getMovieGenresFromDatabase(): List<Genre>{
+        val response: List<MovieGenreEntity> = dao.readMovieGenres()
         return response.map { it.entityToModel() }
     }
 
-    suspend fun getGenreFromDatabaseById(id: Int): Genre{
-        val response: GenreEntity = dao.readGenreById(id)
+    suspend fun getMovieGenreFromDatabaseById(id: Int): Genre{
+        val response: MovieGenreEntity = dao.readMovieGenreById(id)
         return response.entityToModel()
     }
 
-    suspend fun deleteGenres(){
-        dao.deleteGenres()
+    suspend fun deleteMovieGenres(){
+        dao.deleteMovieGenres()
     }
     /**
-    GENRES
+    MOVIES GENRES
+     **/
+    suspend fun insertSerieGenres(list: List<SerieGenreEntity>){
+        dao.insertSerieGenres(list)
+    }
+
+    suspend fun getSerieGenresFromApi():List<Genre>{
+        val response: List<GenreResult> = controller.getSerieGenres()
+        return response.map { it.resultToModel() }
+    }
+
+    suspend fun getSeriesGenresFromApi():List<Genre>{
+        val response: List<GenreResult> = controller.getSerieGenres()
+        return response.map { it.resultToModel() }
+    }
+
+    suspend fun getSerieGenresFromDatabase(): List<Genre>{
+        val response: List<SerieGenreEntity> = dao.readSerieGenres()
+        return response.map { it.entityToModel() }
+    }
+
+    suspend fun getSerieGenreFromDatabaseById(id: Int): Genre{
+        val response: SerieGenreEntity = dao.readSerieGenreById(id)
+        return response.entityToModel()
+    }
+
+    suspend fun deleteSerieGenres(){
+        dao.deleteSerieGenres()
+    }
+    /**
+    FAVORITES
      **/
     suspend fun insertFavorite(fav: FavoriteEntity){
         dao.insertFavorites(fav)
@@ -234,5 +265,30 @@ class Repository @Inject constructor(
 
     suspend fun deleteFavorite(id: Int){
         dao.deleteFavorite(id)
+    }
+    /**
+    VIDEOS
+     **/
+    suspend fun insertVideos(video: VideoEntity){
+        dao.insertVideos(video)
+    }
+
+    suspend fun getMovieVideosFromApi(id: Int):List<Video>{
+        val response: List<VideoResult> = controller.getVideosByMovie(id)
+        return response.map { it.resultToModel() }
+    }
+
+    suspend fun getSerieVideosFromApi(id: Int):List<Video>{
+        val response: List<VideoResult> = controller.getVideosBySerie(id)
+        return response.map { it.resultToModel() }
+    }
+
+    suspend fun getVideosFromDatabase(): List<Video>{
+        val response: List<VideoEntity> = dao.readVideos()
+        return response.map { it.entityToModel() }
+    }
+
+    suspend fun deleteVideos(){
+        dao.deleteVideos()
     }
 }

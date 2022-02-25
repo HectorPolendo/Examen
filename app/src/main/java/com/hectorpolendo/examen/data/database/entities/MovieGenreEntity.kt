@@ -4,14 +4,14 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.hectorpolendo.examen.domain.models.Genre
 
-@Entity(tableName = "Genres")
-data class GenreEntity (
+@Entity(tableName = "MovieGenres")
+data class MovieGenreEntity (
     @PrimaryKey(autoGenerate = false)
     val id: Int,
     val name: String
 )
 
-fun Genre.modelToEntity() = GenreEntity(
+fun Genre.modelToMovieEntity() = MovieGenreEntity(
     id,
     name
 )

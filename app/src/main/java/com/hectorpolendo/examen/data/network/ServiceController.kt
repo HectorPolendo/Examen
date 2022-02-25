@@ -1,9 +1,6 @@
 package com.hectorpolendo.examen.data.network
 
-import com.hectorpolendo.examen.data.network.pojos.GenreResult
-import com.hectorpolendo.examen.data.network.pojos.MovieResult
-import com.hectorpolendo.examen.data.network.pojos.TvSeriesResponse
-import com.hectorpolendo.examen.data.network.pojos.TvSeriesResult
+import com.hectorpolendo.examen.data.network.pojos.*
 import com.hectorpolendo.examen.util.Constants
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -59,10 +56,31 @@ class ServiceController @Inject constructor(private val api: ApiClient) {
         }
     }
 
-    suspend fun getGenres(): List<GenreResult>{
+    suspend fun getMovieGenres(): List<GenreResult>{
         return withContext(Dispatchers.IO){
-            val response = api.getGenres(Constants.API_KEY, Constants.LANGUAGE)
+            val response = api.getMovieGenres(Constants.API_KEY, Constants.LANGUAGE)
             response.body()?.genres ?: emptyList()
+        }
+    }
+
+    suspend fun getSerieGenres(): List<GenreResult>{
+        return withContext(Dispatchers.IO){
+            val response = api.getSerieGenres(Constants.API_KEY, Constants.LANGUAGE)
+            response.body()?.genres ?: emptyList()
+        }
+    }
+
+    suspend fun getVideosByMovie(id: Int): List<VideoResult>{
+        return withContext(Dispatchers.IO){
+            val response = api.getVideosByMovie(id, Constants.API_KEY)
+            response.body()?.results ?: emptyList()
+        }
+    }
+
+    suspend fun getVideosBySerie(id: Int): List<VideoResult>{
+        return withContext(Dispatchers.IO){
+            val response = api.getVideosBySerie(id, Constants.API_KEY)
+            response.body()?.results ?: emptyList()
         }
     }
 }

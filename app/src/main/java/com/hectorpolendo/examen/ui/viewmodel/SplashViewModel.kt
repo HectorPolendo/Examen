@@ -24,7 +24,8 @@ class SplashViewModel @Inject constructor(
     private val airingTodayUseCase: AiringTodayUseCase,
     private val tvPopularUseCase: TvPopularUseCase,
     private val tvTopRatedUseCase: TvTopRatedUseCase,
-    private val genreUseCase: GenreUseCase,
+    private val movieGenreUseCase: MovieGenreUseCase,
+    private val serieGenreUseCase: SerieGenreUseCase,
     private val repository: Repository) : ViewModel() {
 
     private val _mostPopular = MutableLiveData<List<Movie>>()
@@ -34,7 +35,8 @@ class SplashViewModel @Inject constructor(
     private val _airingToday = MutableLiveData<List<TvSerie>>()
     private val _tvPopular = MutableLiveData<List<TvSerie>>()
     private val _tvTopRated = MutableLiveData<List<TvSerie>>()
-    private val _genres = MutableLiveData<List<Genre>>()
+    private val _movieGenres = MutableLiveData<List<Genre>>()
+    private val _serieGenres = MutableLiveData<List<Genre>>()
 
 
     private val _progress = MutableLiveData<Int>()
@@ -50,72 +52,81 @@ class SplashViewModel @Inject constructor(
                     _mostPopular.postValue(popular!!)
                 }
                 /**LECTURA DE PELICULAS ACTUALES*/
-                _progress.postValue(12)
+                _progress.postValue(11)
                 val playingNow = playinNowUseCase.invoke(1)
                 if(!playingNow.isNullOrEmpty()){
                     _playingNow.postValue(playingNow!!)
                 }
                 /**LECTURA DE PELICULAS PRÓXIMAS*/
-                _progress.postValue(24)
+                _progress.postValue(22)
                 val upcoming = upcomingUseCase.invoke(1)
                 if(!upcoming.isNullOrEmpty()){
                     _upcoming.postValue(upcoming!!)
                 }
                 /**LECTURA DE PELICULAS MEJOR VALORADAS*/
-                _progress.postValue(36)
+                _progress.postValue(33)
                 val top = topRatedUseCase.invoke(1)
                 if(!top.isNullOrEmpty()){
                     _topRated.postValue(top!!)
                 }
                 /**LECTURA DE SERIES TRASNMITIDAS HOY*/
-                _progress.postValue(48)
+                _progress.postValue(44)
                 val airing = airingTodayUseCase.invoke(1)
                 if(!airing.isNullOrEmpty()){
                     _airingToday.postValue(airing!!)
                 }
                 /**LECTURA DE SERIES POPULARES*/
-                _progress.postValue(60)
+                _progress.postValue(55)
                 val tvpopular = tvPopularUseCase.invoke(1)
                 if(!tvpopular.isNullOrEmpty()){
                     _tvPopular.postValue(tvpopular!!)
                 }
                 /**LECTURA DE SERIES POPULARES*/
-                _progress.postValue(72)
+                _progress.postValue(66)
                 val tvtoprated = tvTopRatedUseCase.invoke(1)
                 if(!tvtoprated.isNullOrEmpty()){
                     _tvTopRated.postValue(tvtoprated!!)
                 }
-                /**LECTURA DE GÉNEROS*/
-                _progress.postValue(84)
-                val genres = genreUseCase.invoke()
-                if(!genres.isNullOrEmpty()){
-                    _genres.postValue(genres!!)
+                /**LECTURA DE GÉNEROS DE PELICULAS*/
+                _progress.postValue(77)
+                val movieGenres = movieGenreUseCase.invoke()
+                if(!movieGenres.isNullOrEmpty()){
+                    _movieGenres.postValue(movieGenres!!)
+                }
+                /**LECTURA DE GÉNEROS DE SERIES*/
+                _progress.postValue(88)
+                val seriesGenres = serieGenreUseCase.invoke()
+                if(!seriesGenres.isNullOrEmpty()){
+                    _serieGenres.postValue(seriesGenres!!)
                 }
                 _progress.postValue(100)
             }else{
                 _progress.postValue(0)
                 _mostPopular.postValue(repository.getMostPopularFromDatabase())
 
-                _progress.postValue(12)
+                _progress.postValue(11)
                 _playingNow.postValue(repository.getPlayingNowFromDatabase())
 
-                _progress.postValue(24)
+                _progress.postValue(22)
                 _upcoming.postValue(repository.getUpcomingFromDatabase())
 
-                _progress.postValue(36)
+                _progress.postValue(33)
                 _topRated.postValue(repository.getTopRatedFromDatabase())
 
-                _progress.postValue(48)
+                _progress.postValue(44)
                 _airingToday.postValue(repository.getAiringTodayFromDatabase())
 
-                _progress.postValue(60)
+                _progress.postValue(55)
                 _tvPopular.postValue(repository.getTvPopularFromDatabase())
 
-                _progress.postValue(72)
+                _progress.postValue(66)
                 _tvTopRated.postValue(repository.getTvTopRatedFromDatabase())
 
-                _progress.postValue(84)
-                _genres.postValue(repository.getGenresFromDatabase())
+                _progress.postValue(77)
+                _movieGenres.postValue(repository.getMovieGenresFromDatabase())
+
+                _progress.postValue(88)
+                _serieGenres.postValue(repository.getSerieGenresFromDatabase())
 
                 _progress.postValue(100)
             }

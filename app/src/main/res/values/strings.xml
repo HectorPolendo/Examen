@@ -11,6 +11,7 @@
     <string name="score">Calificación</string>
     <string name="language">Lenguage original</string>
     <string name="favorites">Favoritas</string>
-    <string name="categories">Categorias</string>
+    <string name="genres">Géneros</string>
     <string name="empty_list">Empty list</string>
+    <string name="trailers">Trailes</string>
 </resources>

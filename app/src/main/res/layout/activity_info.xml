@@ -4,7 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+        <variable
+            name="adapter"
+            type="com.hectorpolendo.examen.ui.view.adapters.VideosAdapter" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -14,7 +18,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_230sdp">
+            android:layout_height="@dimen/_400sdp">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapsingToolbar"
@@ -49,7 +53,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,7 +90,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:textColor="@color/primary_color"
+                            android:textColor="@color/accent"
                             android:fontFamily="@font/my_font"
                             android:layout_marginLeft="@dimen/_10sdp"/>
                     </LinearLayout>
@@ -110,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:textColor="@color/primary_color"
+                            android:textColor="@color/accent"
                             android:fontFamily="@font/my_font"
                             android:layout_marginLeft="@dimen/_10sdp"/>
                     </LinearLayout>
@@ -134,7 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textStyle="bold"
-                            android:textColor="@color/primary_color"
+                            android:textColor="@color/accent"
                             android:fontFamily="@font/my_font"
                             android:layout_marginLeft="@dimen/_10sdp"/>
                     </LinearLayout>
@@ -142,22 +146,26 @@
 
 
                 <TextView
-                    android:id="@+id/tvCategories"
+                    android:id="@+id/tvGenres"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:fontFamily="@font/my_font"
-                    android:text="@string/categories"
+                    android:text="@string/genres"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
                     app:layout_constraintTop_toBottomOf="@id/linearInfo"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="@id/linearInfo"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCategories"
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cpGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tvCategories"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGenres"
+                    app:layout_constraintStart_toStartOf="@+id/tvGenres">
+
+                </com.google.android.material.chip.ChipGroup>
 
                 <TextView
                     android:id="@+id/tvOverview"
@@ -168,7 +176,25 @@
                     android:textColor="@color/sub_text"
                     android:fontFamily="@font/my_font"
                     android:textSize="@dimen/_10sdp"
-                    app:layout_constraintTop_toBottomOf="@id/rvCategories"
+                    app:layout_constraintTop_toBottomOf="@id/cpGroup"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tvTrailers"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/trailers"
+                    android:fontFamily="@font/my_font"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/tvOverview"
+                    app:layout_constraintStart_toStartOf="@+id/tvOverview"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTrailers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTrailers"
                     app:layout_constraintStart_toStartOf="parent"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

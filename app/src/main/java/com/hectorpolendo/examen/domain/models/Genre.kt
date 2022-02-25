@@ -1,6 +1,7 @@
 package com.hectorpolendo.examen.domain.models
 
-import com.hectorpolendo.examen.data.database.entities.GenreEntity
+import com.hectorpolendo.examen.data.database.entities.MovieGenreEntity
+import com.hectorpolendo.examen.data.database.entities.SerieGenreEntity
 import com.hectorpolendo.examen.data.network.pojos.GenreResult
 
 class Genre (
@@ -13,7 +14,12 @@ fun GenreResult.resultToModel() = Genre(
     name
 )
 
-fun GenreEntity.entityToModel() = Genre(
+fun MovieGenreEntity.entityToModel() = Genre(
+    id,
+    name,
+)
+
+fun SerieGenreEntity.entityToModel() = Genre(
     id,
     name,
 )
